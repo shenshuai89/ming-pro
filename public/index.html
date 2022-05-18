@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MingPro</title>
+    <link rel="stylesheet" href="//unpkg.com/element-plus/dist/index.css" />
+    <link rel="stylesheet" href="../lib/style.css" />
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://unpkg.com/element-plus"></script>
+    <script src="https://unpkg.com/@element-plus/icons-vue"></script>
+    <script src="../lib/ming-pro.umd.js"></script>
+  </head>
+  <body>
+    <div id="app">123</div>
+    <script>
+      let { ref, createApp } = Vue;
+      let App = {
+        setup() {
+          const visible = ref(false);
+          return {
+            visible,
+          };
+        },
+        template:
+          "<h1>hello MingPro!<m-choose-icon title='图标列表' v-model:visible='visible'>选择图标</m-choose-icon></h1>",
+      };
+      let app = createApp(App);
+      for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+        app.component(`icon-${toLine(key)}`, component);
+      }
+      function toLine(value) {
+        return value.replace(/(A-Z)g/, "-$1").toLowerCase();
+      }
+      app.use(ElementPlus).use(MingPro).mount("#app");
+    </script>
+  </body>
+</html>

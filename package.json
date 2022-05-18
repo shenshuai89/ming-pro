@@ -2,11 +2,17 @@
   "name": "ming-pro",
   "private": true,
   "version": "0.0.0",
+  "main": "./lib/ming-pro.es.js",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:components": "node ./build/build.js",
+    "lib": "npm run build:components"
   },
+  "files": [
+    "lib/"
+  ],
   "dependencies": {
     "@element-plus/icons-vue": "^1.1.4",
     "element-plus": "^2.2.0",
@@ -15,6 +21,8 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.3.3",
+    "@vitejs/plugin-vue-jsx": "^1.3.10",
+    "json-templater": "^1.2.0",
     "sass": "^1.51.0",
     "typescript": "^4.5.4",
     "vite": "^2.9.9",
