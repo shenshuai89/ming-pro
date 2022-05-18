@@ -2,7 +2,9 @@
   "name": "ming-pro",
   "private": true,
   "version": "0.0.0",
-  "main": "./lib/ming-pro.es.js",
+  "main": "./lib/ming-pro.umd.js",
+  "module": "./lib/ming-pro.es.js",
+  "style": "./lib/style.css",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
