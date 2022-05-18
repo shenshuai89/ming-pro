@@ -17,8 +17,8 @@
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import NavHeader from "../components/NavHeader.vue";
-import NavSider from "../components/NavSider.vue";
+import NavHeader from "./src/NavHeader.vue";
+import NavSider from "./src/NavSider.vue";
 
 const isCollapse = ref(false);
 const asideWidth = computed(() => (isCollapse.value ? 64 : 200));

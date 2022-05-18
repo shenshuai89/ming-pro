@@ -1,12 +1,15 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import Layout from "@/views/Layout.vue";
+import Layout from "@/components/container/index.vue";
 const routes: RouteRecordRaw[] = [
   {
     path: "/",
     component: Layout,
     children: [
-      { path: "/", component: () =>import("@/views/Home.vue") },
-      { path: "/temp", component: () =>import("@/components/home.vue") },
+      { path: "/", component: () => import("@/views/Home.vue") },
+      {
+        path: "/chooseIcon",
+        component: () => import("@/views/chooseIcon.vue"),
+      },
     ],
   },
 ];
