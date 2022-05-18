@@ -1,7 +1,6 @@
 {
   "name": "ming-pro",
-  "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "main": "./lib/ming-pro.umd.js",
   "module": "./lib/ming-pro.es.js",
   "style": "./lib/style.css",
@@ -15,6 +14,17 @@
   "files": [
     "lib/"
   ],
+  "types": "index.d.ts",
+  "keywords": ["mingPro组件库", "前端UI库", "elementUI二次封装"],
+  "author": "shenshuai89@qq.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shenshuai89/ming-pro.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shenshuai89/ming-pro/issues"
+  },
+  "homepage": "https://github.com/shenshuai89/ming-pro#readme",
   "dependencies": {
     "@element-plus/icons-vue": "^1.1.4",
     "element-plus": "^2.2.0",
