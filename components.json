@@ -1,5 +1,6 @@
 {
     "chooseIcon": "./src/components/chooseIcon",
     "chooseArea": "./src/components/chooseArea",
-    "notification": "./src/components/notification"
+    "notification": "./src/components/notification",
+    "list": "./src/components/list"
 }
