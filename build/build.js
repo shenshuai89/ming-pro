@@ -131,6 +131,14 @@ const buildAll = async () => {
       // emptyOutDir: false, //是否清除原目录下的文件
     },
   });
+  const declareVue = `// 声明当前组件库是vue的插件
+import {App} from "vue"
+declare const _default: {
+    install(app: App): void;
+}
+export default _default;
+`;
+  fs.writeFileSync(path.resolve(outDir, `./index.d.ts`), declareVue);
 };
 
 // 单组件打包构建
@@ -140,7 +148,7 @@ const buildSingle = async (name) => {
     build: {
       rollupOptions,
       lib: {
-        entry: path.resolve(entryDir, name+"/index.ts"),
+        entry: path.resolve(entryDir, name + "/index.ts"),
         name: "index",
         fileName: "index",
         formats: ["es", "umd"],
@@ -159,7 +167,15 @@ const createPackageJson = (name) => {
     "style": "style.css"
   }
   `;
+  const declareVue = `// 声明当前组件库是vue的插件
+import {App} from "vue"
+declare const _default: {
+  install(app: App): void;
+}
+export default _default;
+`;
   fs.writeFileSync(path.resolve(outDir, `${name}/package.json`), jsonStr);
+  fs.writeFileSync(path.resolve(outDir, `${name}/index.d.ts`), declareVue);
 };
 
 const buildLib = async () => {
