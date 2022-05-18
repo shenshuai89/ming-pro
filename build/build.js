@@ -61,7 +61,6 @@ function delDir(path) {
 
 // 生成packages中内容
 Object.keys(components).forEach((list) => {
-  console.log(list, 'list');
   includeComponentTemplate.push(
     render(IMPORT_TEMPLATE, {
       name: list,
@@ -133,8 +132,42 @@ const buildAll = async () => {
     },
   });
 };
+
+// 单组件打包构建
+const buildSingle = async (name) => {
+  await build({
+    ...baseConfig,
+    build: {
+      rollupOptions,
+      lib: {
+        entry: path.resolve(entryDir, name+"/index.ts"),
+        name: "index",
+        fileName: "index",
+        formats: ["es", "umd"],
+      },
+      outDir: path.resolve(outDir, name),
+    },
+  });
+};
+// 单组件打包时，给每个组件创建package.json文件
+const createPackageJson = (name) => {
+  const jsonStr = `
+  {
+    "name": "${name}",
+    "main": "index.umd.js",
+    "module": "index.es.js",
+    "style": "style.css"
+  }
+  `;
+  fs.writeFileSync(path.resolve(outDir, `${name}/package.json`), jsonStr);
+};
+
 const buildLib = async () => {
   await buildAll();
+  Object.keys(components).forEach(async (component) => {
+    console.log("开始单组件打包", component);
+    await buildSingle(component);
+    createPackageJson(component);
+  });
 };
 buildLib();
-
