@@ -164,7 +164,8 @@ const createPackageJson = (name) => {
     "name": "${name}",
     "main": "index.umd.js",
     "module": "index.es.js",
-    "style": "style.css"
+    "style": "style.css",
+    "types": "index.d.ts"
   }
   `;
   const declareVue = `// 声明当前组件库是vue的插件
