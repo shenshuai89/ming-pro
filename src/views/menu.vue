@@ -1,7 +1,9 @@
 <template>
   <div class="menu-show">
-    <m-menu :data="data1" defaultActive="2"></m-menu>
+    <m-menu :data="data1" defaultActive="1"></m-menu>
+    <m-infinite-menu name="a" icon="c" index="b" children="d" :data="data2" defaultActive="2"></m-infinite-menu>
     <m-infinite-menu :data="data3" defaultActive="2"></m-infinite-menu>
+    <m-menu name="a" icon="c" index="b" children="d" :data="data2" defaultActive="1"></m-menu>
   </div>
 </template>
 

@@ -1,14 +1,15 @@
 export interface MenuItem {
   // 导航的图标
-  icon?: string,
+  icon?: string;
   // 处理之后的图标
-  i?: any,
+  i?: any;
   // 处理之后的图标
-  idf?: any,
+  idf?: any;
   // 导航的名字
-  name: string
+  name: string;
   // 导航的标识
-  index: string,
+  index: string;
   // 导航的子菜单
-  children?: MenuItem[]
+  children?: MenuItem[];
+  [props:string]: any;
 }

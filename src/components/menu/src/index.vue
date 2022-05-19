@@ -3,44 +3,44 @@
     :defaultActive="defaultActive" 
     :router="router"
     v-bind="$attrs"> <!-- 未用props接收的，都会放到$attrs --->
-    <template v-for="(item, index) in data" :key="index">
+    <template v-for="(item, idx) in data" :key="idx">
       <el-menu-item
-        v-if="!item.children || !item.children.length"
-        :index="item.index"
+        v-if="!item[children]|| !item[children].length"
+        :index="item[index]"
       >
         <el-icon>
           <component
-            v-if="item.icon"
-            :is="`icon-${toLine(item.icon)}`"
+            v-if="item[icon]"
+            :is="`icon-${toLine(item[icon])}`"
           ></component>
         </el-icon>
-        <span>{{ item.name }}</span>
+        <span>{{ item[name] }}</span>
       </el-menu-item>
       <el-sub-menu
-        v-if="item.children && item.children.length"
+        v-if="item[children]&& item[children].length"
         :index="item.index"
       >
         <template #title>
           <el-icon>
             <component
-              v-if="item.icon"
-              :is="`icon-${toLine(item.icon)}`"
+              v-if="item[icon]"
+              :is="`icon-${toLine(item[icon])}`"
             ></component>
           </el-icon>
-          <span>{{ item.name }}</span>
+          <span>{{ item[name] }}</span>
         </template>
         <el-menu-item
-          v-for="(item1, index1) in item.children"
-          :key="index1"
+          v-for="(item1, idx1) in item[children]"
+          :key="idx1"
           :index="item1.index"
         >
           <el-icon>
             <component
-              v-if="item1.icon"
-              :is="`icon-${toLine(item1.icon)}`"
+              v-if="item1[icon]"
+              :is="`icon-${toLine(item1[icon])}`"
             ></component>
           </el-icon>
-          <span>{{ item1.name }}</span>
+          <span>{{ item1[name] }}</span>
         </el-menu-item>
       </el-sub-menu>
     </template>
@@ -65,6 +65,23 @@ const props = defineProps({
   router: {
     type: Boolean,
     default: false
+  },
+  // 添加自定义属性配置
+  name: {
+    type: String,
+    default: "name"
+  },
+  index: {
+    type: String,
+    default: "index"
+  },
+  icon: {
+    type: String,
+    default: "icon"
+  },
+  children: {
+    type: String,
+    default: "children"
   },
 });
 </script>
