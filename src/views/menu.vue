@@ -1,6 +1,7 @@
 <template>
   <div style="max-width: 300px">
-    <m-menu :data="data1" defaultActive="2"></m-menu>
+    <!-- <m-menu :data="data1" defaultActive="2"></m-menu> -->
+    <m-infinite-menu :data="data3" defaultActive="2"></m-infinite-menu>
   </div>
 </template>
 
@@ -64,6 +65,51 @@ let data2 = [
                     a: "导航3-1-1-1-1",
                     b: "3-1-1-1-1",
                     c: "Document",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+];
+let data3 = [
+  {
+    name: "导航1",
+    index: "1",
+    icon: "Document",
+  },
+  {
+    name: "导航2",
+    index: "2",
+    icon: "Document",
+  },
+  {
+    name: "导航3",
+    index: "3",
+    icon: "Document",
+    children: [
+      {
+        name: "导航3-1",
+        index: "3-1",
+        icon: "Document",
+        children: [
+          {
+            name: "导航3-1-1",
+            index: "3-1-1",
+            icon: "Document",
+            children: [
+              {
+                name: "导航3-1-1-1",
+                index: "3-1-1-1",
+                icon: "Document",
+                children: [
+                  {
+                    name: "导航3-1-1-1-1",
+                    index: "3-1-1-1-1",
+                    icon: "Document",
                   },
                 ],
               },

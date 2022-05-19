@@ -50,7 +50,6 @@ let dialogVisible = computed({
 const copyIcon = (item:string) =>{
   let text = `<icon-${toLine(item)} />`
   useCopy(text);
-  console.log(text);
   // 复制后关闭弹框
   emits("update:visible", false);
 }
