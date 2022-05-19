@@ -2,5 +2,6 @@
     "chooseIcon": "./src/components/chooseIcon",
     "chooseArea": "./src/components/chooseArea",
     "notification": "./src/components/notification",
+    "menu": "./src/components/menu",
     "list": "./src/components/list"
 }
