@@ -5,6 +5,12 @@
       @endChange="handleEnd"
       :startOptions="startOptions"
     ></m-choose-time>
+    <br /><br />
+    <m-choose-date
+      :disableToday="true"
+      @startChange="handleDateStart"
+      @endChange="handleDateEnd"
+    ></m-choose-date>
   </div>
 </template>
 
@@ -18,6 +24,12 @@ const handleStart = (val: string) => {
 };
 const handleEnd = (val: string) => {
   console.log(val, "结束时间");
+};
+const handleDateStart = (val: string) => {
+  console.log(val, "开始日期");
+};
+const handleDateEnd = (val: string) => {
+  console.log(val, "结束日期");
 };
 </script>
 <style lang="scss" scoped></style>
