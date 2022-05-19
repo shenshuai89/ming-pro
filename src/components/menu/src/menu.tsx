@@ -1,5 +1,6 @@
 import { defineComponent, PropType, resolveComponent, h } from "vue";
 import { MenuItem } from "./types";
+import * as ElIcons from "@element-plus/icons-vue";
 const toLine = (val: string) => val!.toLowerCase();
 export default defineComponent({
   name: "infiniteMenu",
@@ -24,14 +25,16 @@ export default defineComponent({
     let renderMenu = (data: MenuItem[]) => {
       // 返回值 渲染成的html
       return data.map((item: MenuItem) => {
-        item.i = `icon-${toLine(item.icon!)}`;
+          // 2种方法 在jsx中显示icon图标的方式
+        item.idf = `icon-${toLine(item.icon!)}`;
+        item.i = (ElIcons as any)[item.icon!];
         // 下面定义的slots，相当于 <template #title>
         let slots = {
           title: () => {
             return (
               <>
-              {/* 导入的动态组件，动态解析 h(resolveComponent(item.i)) */}
-                <el-icon>{h(resolveComponent(item.i))}</el-icon>
+                {/* 导入的动态组件，动态解析 h(resolveComponent(item.i)) */}
+                <el-icon>{h(resolveComponent(item.idf))}</el-icon>
                 <span>{item.name}</span>
               </>
             );
@@ -48,7 +51,9 @@ export default defineComponent({
 
         return (
           <el-menu-item index={item.index}>
-            <el-icon>{h(resolveComponent(item.i))}</el-icon>
+            <el-icon>
+              <item.i />
+            </el-icon>
             <span>{item.name}</span>
           </el-menu-item>
         );
