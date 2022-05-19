@@ -1,6 +1,6 @@
 <template>
-  <div style="max-width: 300px">
-    <!-- <m-menu :data="data1" defaultActive="2"></m-menu> -->
+  <div class="menu-show">
+    <m-menu :data="data1" defaultActive="2"></m-menu>
     <m-infinite-menu :data="data3" defaultActive="2"></m-infinite-menu>
   </div>
 </template>
@@ -121,4 +121,13 @@ let data3 = [
   },
 ];
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.menu-show {
+  flex-direction: row;
+  display: flex;
+  .el-menu{
+    margin-right:10px;
+    width:300px;
+  }
+}
+</style>

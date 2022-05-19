@@ -1,5 +1,5 @@
 <template>
-  <div class="home">Home</div>
+  <div class="home">基于elemnent-plus二次封装的ming-pro组件库</div>
 </template>
 
 <script setup lang="ts">
