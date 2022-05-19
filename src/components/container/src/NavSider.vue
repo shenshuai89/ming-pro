@@ -63,6 +63,11 @@ const menu = [
     index: "/menu",
   },
   {
+    icon: "Clock",
+    name: "时间日期选择器",
+    index: "/time",
+  },
+  {
     icon: "TurnOff",
     name: "城市选择",
     index: "/chooseCity",

@@ -1,7 +1,7 @@
 <template>
   <div class="common-layout">
     <el-container>
-      <el-aside width="auto">
+      <el-aside width="auto" style="background: #545c64;">
         <NavSider :collapse="isCollapse"></NavSider>
       </el-aside>
 
