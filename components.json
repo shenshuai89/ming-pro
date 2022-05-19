@@ -3,5 +3,6 @@
     "chooseArea": "./src/components/chooseArea",
     "notification": "./src/components/notification",
     "menu": "./src/components/menu",
+    "progress": "./src/components/progress",
     "list": "./src/components/list"
 }

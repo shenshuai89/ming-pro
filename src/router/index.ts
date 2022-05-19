@@ -22,6 +22,10 @@ const routes: RouteRecordRaw[] = [
         path: "/menu",
         component: () => import("@/views/menu.vue"),
       },
+      {
+        path: "/progress",
+        component: () => import("@/views/progress.vue"),
+      },
     ],
   },
 ];
