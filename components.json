@@ -8,5 +8,6 @@
     "chooseTime": "./src/components/chooseTime",
     "chooseDate": "./src/components/chooseDate",
     "transition": "./src/components/transition",
+    "form": "./src/components/form",
     "list": "./src/components/list"
 }

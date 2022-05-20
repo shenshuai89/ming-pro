@@ -9,6 +9,7 @@ import chooseTime from "./chooseTime";
 import chooseDate from "./chooseDate";
 import chooseCity from "./chooseCity";
 import transition from "./transition";
+import form from "./form";
 
 const components = [
   chooseIcon,
@@ -21,6 +22,7 @@ const components = [
   chooseTime,
   chooseCity,
   transition,
+  form
 ];
 
 export default {
