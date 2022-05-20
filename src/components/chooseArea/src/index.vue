@@ -40,7 +40,7 @@
 
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import allAreas from "../lib/china.json";
+import allAreas from "../data/china.json";
 export interface AreaItem {
   name: string;
   code: string;
