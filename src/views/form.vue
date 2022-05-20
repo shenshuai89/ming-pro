@@ -1,9 +1,31 @@
 <template>
-  <div><m-form label-width="80px" :options="options"></m-form></div>
+  <div>
+    <m-form
+      label-width="80px"
+      :options="options"
+      @on-change="handleChange"
+      @before-upload="handleBeforeUpload"
+      @on-preview="handlePreview"
+      @on-remove="handleRemove"
+      @before-remove="beforeRemove"
+      @on-success="handleSuccess"
+      @on-exceed="handleExceed"
+    >
+      <template #uploadArea>
+        <el-button size="small" type="primary">Click to upload</el-button>
+      </template>
+      <template #uploadTip>
+        <div style="color: #ccc; font-size: 12px">
+          jpg/png files with a size less than 500kb
+        </div>
+      </template>
+    </m-form>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { FormOptions } from "../components/form/src/types/types";
+import { ElMessage, ElMessageBox } from 'element-plus'
 let options: FormOptions[] = [
   {
     type: "input",
@@ -70,6 +92,117 @@ let options: FormOptions[] = [
       },
     ],
   },
+  {
+    type: "checkbox-group",
+    value: ["足球"],
+    prop: "like",
+    label: "爱好",
+    rules: [
+      {
+        required: true,
+        message: "爱好不能为空",
+        trigger: "change",
+      },
+    ],
+    children: [
+      {
+        type: "checkbox",
+        label: "足球",
+        value: "1",
+      },
+      {
+        type: "checkbox",
+        label: "篮球",
+        value: "2",
+      },
+      {
+        type: "checkbox",
+        label: "排球",
+        value: "3",
+      },
+    ],
+  },
+  {
+    type: "radio-group",
+    value: "",
+    prop: "gender",
+    label: "性别",
+    rules: [
+      {
+        required: true,
+        message: "性别不能为空",
+        trigger: "change",
+      },
+    ],
+    children: [
+      {
+        type: "radio",
+        label: "男",
+        value: "male",
+      },
+      {
+        type: "radio",
+        label: "女",
+        value: "female",
+      },
+      {
+        type: "radio",
+        label: "保密",
+        value: "not",
+      },
+    ],
+  },
+  {
+    type: "upload",
+    label: "上传",
+    prop: "pic",
+    uploadAttrs: {
+      action: "http://jsonplaceholder.typicode.com/posts/",
+      multiple: true,
+      limit: 3,
+    },
+    rules: [
+      {
+        required: true,
+        message: "图片不能为空",
+        trigger: "blur",
+      },
+    ],
+  },
 ];
+
+
+// 处理上传的方法
+let handleRemove = (file: any, fileList: any) => {
+  console.log('handleRemove')
+  console.log(file, fileList)
+}
+let handlePreview = (file: any) => {
+  console.log('handlePreview')
+  console.log(file)
+}
+let beforeRemove = (val: any) => {
+  console.log('beforeRemove')
+  return ElMessageBox.confirm(`Cancel the transfert of ${val.file.name} ?`)
+}
+let handleExceed = (val: any) => {
+  console.log('handleExceed', val)
+  ElMessage.warning(
+    `The limit is 3, you selected ${val.files.length
+    } files this time, add up to ${val.files.length + val.fileList.length} totally`
+  )
+}
+let handleSuccess = (val: any) => {
+  console.log('success')
+  console.log(val)
+}
+let handleChange = (val: any) => {
+  console.log('change')
+  console.log(val)
+}
+let handleBeforeUpload = (val: any) => {
+  console.log('handleBeforeUpload')
+  console.log(val)
+}
 </script>
 <style lang="scss" scoped></style>
