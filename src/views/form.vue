@@ -34,6 +34,42 @@ let options: FormOptions[] = [
       clearable: true,
     },
   },
+  {
+    type: "select",
+    value: "",
+    placeholder: "请选择职位",
+    prop: "role",
+    label: "职位",
+    attrs: {
+      style: {
+        width: "100%",
+      },
+    },
+    rules: [
+      {
+        required: true,
+        message: "职位不能为空",
+        trigger: "change",
+      },
+    ],
+    children: [
+      {
+        type: "option",
+        label: "经理",
+        value: "1",
+      },
+      {
+        type: "option",
+        label: "主管",
+        value: "2",
+      },
+      {
+        type: "option",
+        label: "员工",
+        value: "3",
+      },
+    ],
+  },
 ];
 </script>
 <style lang="scss" scoped></style>

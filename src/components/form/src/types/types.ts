@@ -33,7 +33,7 @@ export interface FormOptions {
   // 表单项的占位符
   placeholder?: string;
   // 表单项的标识
-  prop?: string,
+  prop?: string;
   // 表单元素特有的属性
   attrs?: {
     // css样式
@@ -42,4 +42,8 @@ export interface FormOptions {
     showPassword?: boolean;
     disabled?: boolean;
   };
+  // 表单项的子元素
+  children?: FormOptions[];
+  // CSSProperties设置style样式
+  style?: CSSProperties;
 }
