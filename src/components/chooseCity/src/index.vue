@@ -135,17 +135,21 @@ let allCity = ref<City[]>([]);
 let selectValue = ref<string>("");
 // 下拉框显示城市的数据
 let options = ref<City[]>([]);
+// 筛选框中的值
+const selectCityValue = ref<string>("");
 
 // 分发事件
 let emits = defineEmits(["changeCity", "changeProvince"]);
 const clickCityItem = (item: City) => {
   isShowPopover.value = false;
   defaultText.value = item.name;
+  selectCityValue.value = item.name;
   emits("changeCity", item);
 };
 const clickProvinceItem = (item: string) => {
   isShowPopover.value = false;
   defaultText.value = item;
+  selectCityValue.value = item;
   emits("changeProvince", item);
 };
 
@@ -167,7 +171,6 @@ const filterMethod = (fliterVal: string) => {
   }
 };
 
-const selectCityValue = ref<string>("");
 const changeSelect = (val: number) => {
   if (val) {
     let city = allCity.value.find((item) => item.id === val)!;
