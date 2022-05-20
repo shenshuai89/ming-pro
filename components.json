@@ -4,5 +4,9 @@
     "notification": "./src/components/notification",
     "menu": "./src/components/menu",
     "progress": "./src/components/progress",
+    "chooseCity": "./src/components/chooseCity",
+    "chooseTime": "./src/components/chooseTime",
+    "chooseDate": "./src/components/chooseDate",
+    "transition": "./src/components/transition",
     "list": "./src/components/list"
 }

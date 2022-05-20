@@ -7,6 +7,8 @@ import menu from "./menu";
 import progress from "./progress";
 import chooseTime from "./chooseTime";
 import chooseDate from "./chooseDate";
+import chooseCity from "./chooseCity";
+import transition from "./transition";
 
 const components = [
   chooseIcon,
@@ -17,6 +19,8 @@ const components = [
   progress,
   chooseDate,
   chooseTime,
+  chooseCity,
+  transition,
 ];
 
 export default {
