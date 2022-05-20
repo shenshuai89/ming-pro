@@ -19,13 +19,26 @@
           jpg/png files with a size less than 500kb
         </div>
       </template>
+      <template #action="scope">
+        <el-button size="small" type="primary" @click="handleSubmut(scope)"
+          >提交</el-button
+        >
+        <el-button size="small" type="primary" @click="handleReset(scope)"
+          >重置</el-button
+        >
+      </template>
     </m-form>
   </div>
 </template>
 
 <script setup lang="ts">
-import { FormOptions } from "../components/form/src/types/types";
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { FormInstance, FormOptions } from "../components/form/src/types/types";
+import { ElMessage, ElMessageBox } from "element-plus";
+interface Scope {
+  form: FormInstance;
+  model: any;
+}
+
 let options: FormOptions[] = [
   {
     type: "input",
@@ -171,38 +184,55 @@ let options: FormOptions[] = [
   },
 ];
 
+const handleSubmut = (scope: Scope) => {
+  scope.form.validate((valid) => {
+    if (valid) {
+      // 校验通过
+      console.log(scope.form, scope.model);
+      ElMessage.success("submit success");
+    } else {
+      ElMessage.error("表单有误，请修正后提交");
+    }
+  });
+};
+const handleReset = ({ form }: Scope) => {
+  form.resetFields();
+};
 
 // 处理上传的方法
 let handleRemove = (file: any, fileList: any) => {
-  console.log('handleRemove')
-  console.log(file, fileList)
-}
+  console.log("handleRemove");
+  console.log(file, fileList);
+};
 let handlePreview = (file: any) => {
-  console.log('handlePreview')
-  console.log(file)
-}
+  console.log("handlePreview");
+  console.log(file);
+};
 let beforeRemove = (val: any) => {
-  console.log('beforeRemove')
-  return ElMessageBox.confirm(`Cancel the transfert of ${val.file.name} ?`)
-}
+  console.log("beforeRemove");
+  return ElMessageBox.confirm(`Cancel the transfert of ${val.file.name} ?`);
+};
 let handleExceed = (val: any) => {
-  console.log('handleExceed', val)
+  console.log("handleExceed", val);
   ElMessage.warning(
-    `The limit is 3, you selected ${val.files.length
-    } files this time, add up to ${val.files.length + val.fileList.length} totally`
-  )
-}
+    `The limit is 3, you selected ${
+      val.files.length
+    } files this time, add up to ${
+      val.files.length + val.fileList.length
+    } totally`
+  );
+};
 let handleSuccess = (val: any) => {
-  console.log('success')
-  console.log(val)
-}
+  console.log("success");
+  console.log(val);
+};
 let handleChange = (val: any) => {
-  console.log('change')
-  console.log(val)
-}
+  console.log("change");
+  console.log(val);
+};
 let handleBeforeUpload = (val: any) => {
-  console.log('handleBeforeUpload')
-  console.log(val)
-}
+  console.log("handleBeforeUpload");
+  console.log(val);
+};
 </script>
 <style lang="scss" scoped></style>

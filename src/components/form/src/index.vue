@@ -2,6 +2,7 @@
   <el-form
     v-if="model"
     v-bind="$attrs"
+    ref="form"
     :model="model"
     :rules="rules"
     :validate-on-rule-change="false"
@@ -59,12 +60,17 @@
         </component>
       </el-form-item>
     </template>
+    <!-- form 底部的提交和重置按钮 -->
+    <el-form-item>
+      <!-- 通过作用域插槽将数据传递给上层【使用者】 -->
+      <slot name="action" :form="form" :model="model"></slot>
+    </el-form-item>
   </el-form>
 </template>
 
 <script setup lang="ts">
 import { onMounted, PropType, ref, watch } from "vue";
-import { FormOptions } from "./types/types";
+import { FormInstance, FormOptions } from "./types/types";
 import cloneDeep from "lodash/cloneDeep";
 
 let props = defineProps({
@@ -72,9 +78,14 @@ let props = defineProps({
     type: Array as PropType<FormOptions[]>,
     required: true,
   },
+  httpRequest: {
+    type: Function,
+  },
 });
 let model = ref<any>(null);
 let rules = ref<any>(null);
+// ref获取整个表单的html结构，在html中定义ref标签
+let form = ref<FormInstance | null>(null);
 
 const initForm = () => {
   if (props.options && props.options.length > 0) {
@@ -103,7 +114,17 @@ watch(
   { deep: true }
 );
 
-let emits = defineEmits(['on-preview', 'on-remove', 'on-success', 'on-error', 'on-progress', 'on-change', 'before-upload', 'before-remove', 'on-exceed'])
+let emits = defineEmits([
+  "on-preview",
+  "on-remove",
+  "on-success",
+  "on-error",
+  "on-progress",
+  "on-change",
+  "before-upload",
+  "before-remove",
+  "on-exceed",
+]);
 // 上传组件的所有方法
 let onPreview = (file: File) => {
   emits("on-preview", file);

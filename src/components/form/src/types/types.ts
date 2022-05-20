@@ -75,6 +75,7 @@ export interface ValidateFieldCallback {
   (message?: string, invalidFields?: ValidateFieldsError): void;
 }
 
+// Form表单实例的属性数据
 export interface FormInstance {
   registerLabelWidth(width: number, oldWidth: number): void;
   deregisterLabelWidth(width: number): void;
