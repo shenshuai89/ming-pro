@@ -1,7 +1,7 @@
 <template>
   <div class="common-layout">
     <el-container>
-      <el-aside width="auto" style="background: #545c64;">
+      <el-aside width="auto" style="background: #545c64">
         <NavSider :collapse="isCollapse"></NavSider>
       </el-aside>
 
@@ -17,8 +17,8 @@
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import NavHeader from "./src/NavHeader.vue";
-import NavSider from "./src/NavSider.vue";
+import NavHeader from "@/components/container/src/NavHeader.vue";
+import NavSider from "@/components/container/src/NavSider.vue";
 
 const isCollapse = ref(false);
 const asideWidth = computed(() => (isCollapse.value ? 64 : 200));
@@ -28,5 +28,8 @@ const asideWidth = computed(() => (isCollapse.value ? 64 : 200));
 .el-header {
   background-color: #fcfcfc;
   border-bottom: 1px solid #e3e3e3;
+}
+.el-main {
+  text-align: left;
 }
 </style>

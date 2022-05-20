@@ -70,7 +70,7 @@ const menu = [
   {
     icon: "TurnOff",
     name: "城市选择",
-    index: "/chooseCity",
+    index: "/city",
   },
   {
     icon: "DArrowRight",
