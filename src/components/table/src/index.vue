@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="data">
+  <el-table :data="data" v-loading="isLoading" v-bind="$attrs">
     <template v-for="item in filterOptions" :key="item.prop">
       <el-table-column
         v-if="!item.slot"
@@ -53,5 +53,6 @@ const filterOptions = computed(() => {
   return props.options.filter((item) => !item.action);
 });
 const actionOptions = computed(() => props.options.find((item) => item.action));
+const isLoading = computed(() => !(props.data && props.data.length > 0));
 </script>
 <style lang="scss" scoped></style>
