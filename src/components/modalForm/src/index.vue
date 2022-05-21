@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    :custom-class="[isScroll ? 'modal-form-dialog-scroll' : '']"
+    :custom-class="customClass"
     v-model="dialogVisible"
     v-bind="$attrs"
   >
@@ -80,6 +80,9 @@ const dialogVisible = computed({
 });
 
 let form = ref<FormInstance | null>(null);
+const customClass = computed(() => {
+  return props.isScroll ? "modal-form-dialog-scroll" : "";
+});
 </script>
 <style lang="scss">
 .modal-form-dialog-scroll {
