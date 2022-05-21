@@ -6,6 +6,11 @@
     element-loading-text="加载中..."
     element-loading-background="rgba(0,0,0,.6)"
     element-loading-svg-view-box="-10, -10, 50, 50"
+    :currentClickCell="currentClickCell"
+    ref="table"
+    @check="handleCheck"
+    @close="handleClose"
+    @editCell="handleEditCell"
   >
     <template #date="scope">
       <el-icon><icon-timer /></el-icon>
@@ -20,11 +25,19 @@
       >
       <el-button type="success" size="small">删除</el-button>
     </template>
+
+    <!-- 点击编辑图标，时的插槽 -->
+    <!-- <template #editSlot="{ scope }">
+      <el-button size="small" type="primary" @click="confirm(scope)"
+        >确认</el-button
+      >
+      <el-button size="small" @click="cancel(scope)">取消</el-button>
+    </template> -->
   </m-table>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, onMounted, onUpdated, ref, watch } from "vue";
 import { TableOptions } from "../components/table/src/types";
 let options: TableOptions[] = [
   {
@@ -78,7 +91,8 @@ setTimeout(() => {
       address: "No. 189, Grove St, Los Angeles",
     },
   ];
-}, 3000);
+}, 0);
+// }, 3000);
 let svg = `
     <path class="path" d="
         M 30 15
@@ -92,5 +106,26 @@ let svg = `
 const edit = (value: string) => {
   console.log(value);
 };
+const table = ref(null);
+const handleCheck = (value: string) => {
+  console.log(value, "父组件处理");
+};
+const handleClose = (value: string) => {
+  console.log(value, "父组件处理");
+};
+const currentClickCell = ref<string>("");
+
+// 自定义编辑图标的插槽时
+const confirm = (value: any) => {
+//   console.log(value, "父组件处理xxx");
+  currentClickCell.value = "";
+};
+const cancel = (value: any) => {
+//   console.log(value, "父组件处理xxx");
+  currentClickCell.value = "";
+};
+const handleEditCell=(value: any) => {
+    currentClickCell.value = value;
+}
 </script>
 <style lang="scss" scoped></style>
