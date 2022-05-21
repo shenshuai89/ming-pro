@@ -3,6 +3,7 @@
     <m-form
       label-width="80px"
       :options="options"
+      ref="form"
       @on-change="handleChange"
       @before-upload="handleBeforeUpload"
       @on-preview="handlePreview"
@@ -23,7 +24,8 @@
         <el-button size="small" type="primary" @click="handleSubmut(scope)"
           >提交</el-button
         >
-        <el-button size="small" type="primary" @click="handleReset(scope)"
+        <!-- <el-button size="small" type="primary" @click="handleReset(scope)" -->
+        <el-button size="small" type="primary" @click="resetForm"
           >重置</el-button
         >
       </template>
@@ -34,10 +36,12 @@
 <script setup lang="ts">
 import { FormInstance, FormOptions } from "../components/form/src/types/types";
 import { ElMessage, ElMessageBox } from "element-plus";
+import { ref } from "vue";
 interface Scope {
   form: FormInstance;
   model: any;
 }
+let form = ref();
 
 let options: FormOptions[] = [
   {
@@ -182,6 +186,20 @@ let options: FormOptions[] = [
       },
     ],
   },
+  {
+    type: "editor",
+    value: "123",
+    prop: "desc",
+    label: "描述",
+    placeholder: "请输入描述",
+    rules: [
+      {
+        required: true,
+        message: "描述不能为空",
+        trigger: "blur",
+      },
+    ],
+  },
 ];
 
 const handleSubmut = (scope: Scope) => {
@@ -197,6 +215,12 @@ const handleSubmut = (scope: Scope) => {
 };
 const handleReset = ({ form }: Scope) => {
   form.resetFields();
+};
+
+// 重置表单
+// 使用通过expose封装的方法，重置form表单和editor富文本编辑
+let resetForm = () => {
+  form.value.resetEditor();
 };
 
 // 处理上传的方法
