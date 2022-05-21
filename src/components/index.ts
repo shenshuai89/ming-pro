@@ -10,6 +10,7 @@ import chooseDate from "./chooseDate";
 import chooseCity from "./chooseCity";
 import transition from "./transition";
 import form from "./form";
+import modalForm from "./modalForm";
 
 const components = [
   chooseIcon,
@@ -22,7 +23,8 @@ const components = [
   chooseTime,
   chooseCity,
   transition,
-  form
+  form,
+  modalForm
 ];
 
 export default {

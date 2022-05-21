@@ -23,6 +23,7 @@
         <el-upload
           v-if="item.type === 'upload'"
           v-bind="item.uploadAttrs"
+          ref="upload"
           :on-preview="onPreview"
           :on-remove="onRemove"
           :on-success="onSuccess"
@@ -103,6 +104,8 @@ let rules = ref<any>(null);
 let form = ref<FormInstance | null>(null);
 // 定义 存放editor值的
 let editorStore = ref();
+// 上传文件的列表
+let upload = ref();
 
 const initForm = () => {
   if (props.options && props.options.length > 0) {
@@ -119,13 +122,17 @@ const initForm = () => {
         // 富文本编辑依赖dom元素的更新，所以需要使用到nextTick元素，可以获取到立即更新后的dom元素
         // 编辑器配置
         nextTick(() => {
-          const editorConfig: Partial<IEditorConfig> = {};
-          editorConfig.placeholder = "请输入内容 ... ";
+          const editorConfig: Partial<IEditorConfig> = {
+            autoFocus: false,
+            placeholder: "请输入内容 ... ",
+            maxLength: 1000,
+          };
           editorConfig.onChange = (editor: IDomEditor) => {
             // 当编辑器选区、内容变化时，即触发
             // console.log("content", editor.children);
             // console.log("html", editor.getHtml());
-            model.value[op.prop!] = editor.getHtml();
+            model.value[op.prop!] =
+              "<p><br></p>" === editor.getHtml() ? "" : editor.getHtml();
           };
 
           // 工具栏配置
@@ -163,9 +170,11 @@ watch(
 );
 
 // 点击重置时，单独处理富文本的重置操作
-const resetEditor = () => {
+const resetForm = () => {
   // 重置element-plus的表单
   form.value!.resetFields();
+  // 清空上次上传的附件内容
+  upload.value[0].clearFiles();
 
   // 获取到富文本的配置项, 判断下有富文本编辑存在的清空下
   if (props.options && props.options.length) {
@@ -174,12 +183,26 @@ const resetEditor = () => {
     if (editorItem) {
       editorStore.value.clear();
     }
+    let uploadItem = props.options.find((item) => item.type === "upload")!;
+    if (uploadItem) {
+      console.log(form.value);
+    }
   }
+};
+// element form表单验证的方法
+const validate = () => {
+  return form.value!.validate;
+};
+// 获取form表单填写的数据
+const getFormData = () => {
+  return model.value;
 };
 // 通过expose将组件内的属性或方法暴露给使用者
 // 此处不能使用emits，因为emits把方法发送给父标签的自定义事件上，reset操作是绑定在单独的按钮元素上的
 defineExpose({
-  resetEditor,
+  resetForm,
+  validate,
+  getFormData,
 });
 
 let emits = defineEmits([

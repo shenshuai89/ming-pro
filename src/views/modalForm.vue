@@ -1,17 +1,17 @@
 <template>
   <div>
-    <m-form
-      label-width="80px"
+    <el-button type="primary" @click="showModal">显示弹出框</el-button>
+    <m-modal-form
+      v-model:visible="visible"
       :options="options"
-      ref="form"
-      @on-change="handleChange"
-      @before-upload="handleBeforeUpload"
-      @on-preview="handlePreview"
-      @on-remove="handleRemove"
-      @before-remove="beforeRemove"
-      @on-success="handleSuccess"
-      @on-exceed="handleExceed"
+      :isScroll="true"
+      title="弹出框"
+      width="66%"
     >
+      <template #footer="scope">
+        <el-button @click="cancel(scope.form)">重置</el-button>
+        <el-button type="primary" @click="confirm(scope.form)">确认</el-button>
+      </template>
       <template #uploadArea>
         <el-button size="small" type="primary">Click to upload</el-button>
       </template>
@@ -20,39 +20,39 @@
           jpg/png files with a size less than 500kb
         </div>
       </template>
-      <template #action="scope">
-        <el-button size="small" type="primary" @click="handleSubmut(scope)"
-          >提交</el-button
-        >
-        <!-- <el-button size="small" type="primary" @click="handleReset(scope)" -->
-        <el-button size="small" type="primary" @click="resetForm"
-          >重置</el-button
-        >
-      </template>
-    </m-form>
+    </m-modal-form>
   </div>
 </template>
 
 <script setup lang="ts">
-import { FormInstance, FormOptions } from "../components/form/src/types/types";
-import { ElMessage, ElMessageBox } from "element-plus";
+import { ElMessage } from "element-plus";
+import { cloneDeep } from "lodash";
 import { ref } from "vue";
-interface Scope {
-  form: FormInstance;
-  model: any;
-}
-let form = ref();
+import { FormInstance, FormOptions } from "../components/form/src/types/types";
+const visible = ref<boolean>(false);
+const showModal = () => {
+  visible.value = !visible.value;
+};
 
 let options: FormOptions[] = [
   {
     type: "input",
     value: "",
-    label: "username",
+    label: "用户名",
     prop: "username",
     placeholder: "请输入用户名",
     rules: [
-      { required: true, message: "用户名不能为空", trigger: "blur" },
-      { min: 2, max: 10, message: "用户名在2-10位之间", trigger: "blur" },
+      {
+        required: true,
+        message: "用户名不能为空",
+        trigger: "blur",
+      },
+      {
+        min: 2,
+        max: 6,
+        message: "用户名在2-6位之间",
+        trigger: "blur",
+      },
     ],
     attrs: {
       clearable: true,
@@ -61,12 +61,21 @@ let options: FormOptions[] = [
   {
     type: "input",
     value: "",
-    label: "password",
+    label: "密码",
     prop: "password",
     placeholder: "请输入密码",
     rules: [
-      { required: true, message: "密码不能为空", trigger: "blur" },
-      { min: 2, max: 6, message: "密码在2-6位之间", trigger: "blur" },
+      {
+        required: true,
+        message: "密码不能为空",
+        trigger: "blur",
+      },
+      {
+        min: 6,
+        max: 15,
+        message: "密码在6-15位之间",
+        trigger: "blur",
+      },
     ],
     attrs: {
       showPassword: true,
@@ -111,7 +120,7 @@ let options: FormOptions[] = [
   },
   {
     type: "checkbox-group",
-    value: ["足球"],
+    value: [],
     prop: "like",
     label: "爱好",
     rules: [
@@ -174,7 +183,7 @@ let options: FormOptions[] = [
     label: "上传",
     prop: "pic",
     uploadAttrs: {
-      action: "http://jsonplaceholder.typicode.com/posts/",
+      action: "https://jsonplaceholder.typicode.com/posts/",
       multiple: true,
       limit: 3,
     },
@@ -188,7 +197,7 @@ let options: FormOptions[] = [
   },
   {
     type: "editor",
-    value: "123",
+    value: "",
     prop: "desc",
     label: "描述",
     placeholder: "请输入描述",
@@ -201,62 +210,25 @@ let options: FormOptions[] = [
     ],
   },
 ];
-
-const handleSubmut = (scope: Scope) => {
-  scope.form.validate((valid) => {
+const cancel = (form: FormInstance) => {
+  form.resetForm!();
+};
+const confirm = (form: FormInstance) => {
+  const validate: any = form.validate();
+//   console.log(form)
+  validate((valid: boolean) => {
     if (valid) {
-      // 校验通过
-      console.log(scope.form, scope.model);
-      ElMessage.success("submit success");
+      const cpModel = cloneDeep(form.getFormData!());
+      console.log(cpModel);
+      ElMessage.success("表单提交成功");
+      setTimeout(() => {
+        visible.value = false;
+        form.resetForm!();
+      }, 1000);
     } else {
-      ElMessage.error("表单有误，请修正后提交");
+      ElMessage.error("表单验证失败，重新编辑后提交");
     }
   });
-};
-const handleReset = ({ form }: Scope) => {
-  form.resetFields();
-};
-
-// 重置表单
-// 使用通过expose封装的方法，重置form表单和editor富文本编辑
-let resetForm = () => {
-  form.value.resetForm();
-};
-
-// 处理上传的方法
-let handleRemove = (file: any, fileList: any) => {
-  console.log("handleRemove");
-  console.log(file, fileList);
-};
-let handlePreview = (file: any) => {
-  console.log("handlePreview");
-  console.log(file);
-};
-let beforeRemove = (val: any) => {
-  console.log("beforeRemove");
-  return ElMessageBox.confirm(`Cancel the transfert of ${val.file.name} ?`);
-};
-let handleExceed = (val: any) => {
-  console.log("handleExceed", val);
-  ElMessage.warning(
-    `The limit is 3, you selected ${
-      val.files.length
-    } files this time, add up to ${
-      val.files.length + val.fileList.length
-    } totally`
-  );
-};
-let handleSuccess = (val: any) => {
-  console.log("success");
-  console.log(val);
-};
-let handleChange = (val: any) => {
-  console.log("change");
-  console.log(val);
-};
-let handleBeforeUpload = (val: any) => {
-  console.log("handleBeforeUpload");
-  console.log(val);
 };
 </script>
 <style lang="scss" scoped></style>
