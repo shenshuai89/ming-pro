@@ -9,5 +9,7 @@
     "chooseDate": "./src/components/chooseDate",
     "transition": "./src/components/transition",
     "form": "./src/components/form",
+    "table": "./src/components/table",
+    "modalForm": "./src/components/modalForm",
     "list": "./src/components/list"
 }

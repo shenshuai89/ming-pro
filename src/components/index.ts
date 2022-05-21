@@ -11,6 +11,7 @@ import chooseCity from "./chooseCity";
 import transition from "./transition";
 import form from "./form";
 import modalForm from "./modalForm";
+import table from "./table";
 
 const components = [
   chooseIcon,
@@ -24,7 +25,8 @@ const components = [
   chooseCity,
   transition,
   form,
-  modalForm
+  modalForm,
+  table,
 ];
 
 export default {
