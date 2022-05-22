@@ -60,6 +60,21 @@
       </template>
     </el-table-column>
   </el-table>
+  <div
+    v-if="pagination && !isLoading"
+    class="pagination"
+    :style="{ justifyContent }"
+  >
+    <el-pagination
+      v-model:currentPage="currentPage"
+      v-model:page-size="pageSize"
+      :page-sizes="pageSizes"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+    ></el-pagination>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -90,6 +105,36 @@ const props = defineProps({
   editRowTag: {
     type: String,
     default: "",
+  },
+  // 是否显示分页
+  pagination: {
+    type: Boolean,
+    default: false,
+  },
+  // 显示分页的对齐方式
+  paginationAlign: {
+    type: String as PropType<"left" | "center" | "right">,
+    default: "left",
+  },
+  // 当前是第几页
+  currentPage: {
+    type: Number,
+    default: 1,
+  },
+  // 当前一页多少条数据
+  pageSize: {
+    type: Number,
+    default: 10,
+  },
+  // 显示分页数据多少条的选项
+  pageSizes: {
+    type: Array,
+    default: () => [10, 20, 30, 40],
+  },
+  // 数据总条数
+  total: {
+    type: Number,
+    default: 0,
   },
 });
 const filterOptions = computed(() => {
@@ -140,11 +185,11 @@ const rowClick = (row: any, column: any) => {
       });
     }
     // 重置editRowTag属性
-    if(!row.rowEdit) emits("update:editRowTag", "");
+    if (!row.rowEdit) emits("update:editRowTag", "");
   }
 };
 
-const emits = defineEmits(["check", "close", "editCell", "update:editRowTag"]);
+const emits = defineEmits(["check", "close", "editCell", "update:editRowTag", "size-change", "current-change"]);
 const editCell = (val: any) => {
   currentCell.value = val.$index + val.column.id;
   emits("editCell", currentCell);
@@ -166,6 +211,25 @@ watch(
     }
   }
 );
+
+
+/* 分页设置 */
+// 分页的每一页数据变化
+let handleSizeChange = (val: number) => {
+  emits('size-change', val)
+  // console.log(val)
+}
+// 分页页数改变
+let handleCurrentChange = (val: number) => {
+  emits('current-change', val)
+  // console.log(val)
+}
+// 表格分页的排列方式
+let justifyContent = computed(() => {
+  if (props.paginationAlign === 'left') return 'flex-start'
+  else if (props.paginationAlign === 'right') return 'flex-end'
+  else return 'center'
+})
 </script>
 <style lang="scss" scoped>
 .edit-icon {
@@ -201,5 +265,12 @@ watch(
       //   }
     }
   }
+}
+.pagination {
+  margin-top: 16px;
+  display: flex;
+}
+.el-table--fit{
+    min-height: calc(100vh - 154px);
 }
 </style>

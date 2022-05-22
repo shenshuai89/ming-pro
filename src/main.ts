@@ -5,6 +5,7 @@ import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 import App from "./App.vue";
 import router from "./router";
 import MingPro from "./components"
+import "./mock/index"; // table分页，模拟数据
 // 通过安装依赖使用
 // import MingPro from "ming-pro";
 // import "ming-pro/lib/style.css";

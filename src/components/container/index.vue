@@ -31,5 +31,7 @@ const asideWidth = computed(() => (isCollapse.value ? 64 : 200));
 }
 .el-main {
   text-align: left;
+  overflow: scroll;
+  height: calc(100vh - 60px);
 }
 </style>

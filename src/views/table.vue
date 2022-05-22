@@ -8,11 +8,17 @@
     element-loading-svg-view-box="-10, -10, 50, 50"
     :currentClickCell="currentClickCell"
     :isEditRow="true"
+    :pagination="true"
+    :total="total"
+    :currentPage="current"
+    :pageSize="pageSize"
     v-model:editRowTag="editRowTag"
     ref="table"
     @check="handleCheck"
     @close="handleClose"
     @editCell="handleEditCell"
+    @size-change="handleSizeChange"
+    @current-change="handleCurrentChange"
   >
     <template #date="scope">
       <el-icon><icon-timer /></el-icon>
@@ -49,6 +55,7 @@
 <script setup lang="ts">
 import { computed, onMounted, onUpdated, ref, watch } from "vue";
 import { TableOptions } from "../components/table/src/types";
+import axios from "axios";
 let options: TableOptions[] = [
   {
     prop: "date",
@@ -79,7 +86,7 @@ let options: TableOptions[] = [
 ];
 const tableData = ref<{ date: string; name: string; address: string }[]>([]);
 setTimeout(() => {
-  tableData.value = [
+  /* tableData.value = [
     {
       date: "2016-05-03",
       name: "Tom1",
@@ -100,7 +107,7 @@ setTimeout(() => {
       name: "Tom4",
       address: "No. 189, Grove St, Los Angeles",
     },
-  ];
+  ]; */
 }, 0);
 // }, 3000);
 let svg = `
@@ -113,6 +120,36 @@ let svg = `
         L 15 15
     " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
     `;
+
+// 分页，设置
+let current = ref<number>(1); //当前页
+let pageSize = ref<number>(6); // 每页数据条数
+let total = ref<number>(0); // 总数
+let getData = () => {
+  axios
+    .post("/api/list", {
+      current: current.value,
+      pageSize: pageSize.value,
+    })
+    .then((res: any) => {
+      if (res.data.code === "200") {
+        tableData.value = res.data.data.rows;
+        total.value = res.data.data.total;
+        console.log(res.data.data);
+      }
+    });
+};
+onMounted(() => {
+  getData();
+});
+let handleSizeChange = (val: number) => {
+  pageSize.value = val
+  getData()
+}
+let handleCurrentChange = (val: number) => {
+  current.value = val
+  getData()
+}
 
 // 编辑行标识
 let editRowTag = ref<string>("");
