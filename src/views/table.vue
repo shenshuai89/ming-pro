@@ -8,7 +8,7 @@
     element-loading-svg-view-box="-10, -10, 50, 50"
     :currentClickCell="currentClickCell"
     :isEditRow="true"
-    :editRowTag="editRowTag"
+    v-model:editRowTag="editRowTag"
     ref="table"
     @check="handleCheck"
     @close="handleClose"
@@ -29,14 +29,20 @@
         >删除</el-button
       >
     </template>
+    <template #editRow="scope">
+      <el-button type="warning" size="small" @click="editConfirm(scope.scope)"
+        >确认</el-button
+      >
+      <el-button type="info" size="small">取消</el-button>
+    </template>
 
     <!-- 点击编辑图标，时的插槽 -->
-    <template #editSlot="{ scope }">
+    <!-- <template #editSlot="{ scope }">
       <el-button size="small" type="primary" @click="confirm(scope)"
         >确认</el-button
       >
       <el-button size="small" @click="cancel(scope)">取消</el-button>
-    </template>
+    </template> -->
   </m-table>
 </template>
 
@@ -118,6 +124,11 @@ const deleteRow = (value: string) => {
   console.log(value);
   editRowTag.value = "delete";
 };
+
+const editConfirm = () => {
+  console.log("确认编辑的内容");
+};
+
 const table = ref(null);
 const handleCheck = (value: string) => {
   console.log(value, "父组件处理");

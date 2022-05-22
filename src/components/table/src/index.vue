@@ -55,7 +55,8 @@
       :width="actionOptions.width"
     >
       <template #default="scope">
-        <slot name="action" :scope="scope"></slot>
+        <slot name="editRow" v-if="scope.row.rowEdit" :scope="scope"></slot>
+        <slot name="action" v-else :scope="scope"></slot>
       </template>
     </el-table-column>
   </el-table>
@@ -138,10 +139,12 @@ const rowClick = (row: any, column: any) => {
         return row.name !== item.name;
       });
     }
+    // 重置editRowTag属性
+    if(!row.rowEdit) emits("update:editRowTag", "");
   }
 };
 
-const emits = defineEmits(["check", "close", "editCell"]);
+const emits = defineEmits(["check", "close", "editCell", "update:editRowTag"]);
 const editCell = (val: any) => {
   currentCell.value = val.$index + val.column.id;
   emits("editCell", currentCell);
