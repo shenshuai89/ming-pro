@@ -7,6 +7,8 @@
     element-loading-background="rgba(0,0,0,.6)"
     element-loading-svg-view-box="-10, -10, 50, 50"
     :currentClickCell="currentClickCell"
+    :isEditRow="true"
+    :editRowTag="editRowTag"
     ref="table"
     @check="handleCheck"
     @close="handleClose"
@@ -23,16 +25,18 @@
       <el-button type="primary" size="small" @click="edit(scope.scope)"
         >编辑</el-button
       >
-      <el-button type="success" size="small">删除</el-button>
+      <el-button type="success" size="small" @click="deleteRow(scope.scope)"
+        >删除</el-button
+      >
     </template>
 
     <!-- 点击编辑图标，时的插槽 -->
-    <!-- <template #editSlot="{ scope }">
+    <template #editSlot="{ scope }">
       <el-button size="small" type="primary" @click="confirm(scope)"
         >确认</el-button
       >
       <el-button size="small" @click="cancel(scope)">取消</el-button>
-    </template> -->
+    </template>
   </m-table>
 </template>
 
@@ -103,8 +107,16 @@ let svg = `
         L 15 15
     " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
     `;
+
+// 编辑行标识
+let editRowTag = ref<string>("");
 const edit = (value: string) => {
   console.log(value);
+  editRowTag.value = "edit";
+};
+const deleteRow = (value: string) => {
+  console.log(value);
+  editRowTag.value = "delete";
 };
 const table = ref(null);
 const handleCheck = (value: string) => {
@@ -117,15 +129,15 @@ const currentClickCell = ref<string>("");
 
 // 自定义编辑图标的插槽时
 const confirm = (value: any) => {
-//   console.log(value, "父组件处理xxx");
+  //   console.log(value, "父组件处理xxx");
   currentClickCell.value = "";
 };
 const cancel = (value: any) => {
-//   console.log(value, "父组件处理xxx");
+  //   console.log(value, "父组件处理xxx");
   currentClickCell.value = "";
 };
-const handleEditCell=(value: any) => {
-    currentClickCell.value = value;
-}
+const handleEditCell = (value: any) => {
+  currentClickCell.value = value;
+};
 </script>
 <style lang="scss" scoped></style>
