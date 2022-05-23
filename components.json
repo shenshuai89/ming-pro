@@ -10,6 +10,7 @@
     "transition": "./src/components/transition",
     "form": "./src/components/form",
     "table": "./src/components/table",
+    "calendar": "./src/components/calendar",
     "modalForm": "./src/components/modalForm",
     "list": "./src/components/list"
 }

@@ -12,6 +12,7 @@ import transition from "./transition";
 import form from "./form";
 import modalForm from "./modalForm";
 import table from "./table";
+import calendar from "./calendar";
 
 const components = [
   chooseIcon,
@@ -27,6 +28,7 @@ const components = [
   form,
   modalForm,
   table,
+  calendar
 ];
 
 export default {
