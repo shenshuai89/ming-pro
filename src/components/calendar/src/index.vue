@@ -4,10 +4,11 @@
 
 <script setup lang="ts">
 import "@fullcalendar/core/vdom";
-import { Calendar } from "@fullcalendar/core";
+import { Calendar, EventClickArg } from "@fullcalendar/core";
 import daygrid from "@fullcalendar/daygrid";
-import interaction from "@fullcalendar/interaction";
-import { onMounted, ref } from "vue";
+import interaction, { DateClickArg } from "@fullcalendar/interaction";
+import { onMounted, ref, PropType, watch } from "vue";
+import { EventItem } from "./types";
 
 let props = defineProps({
   // 语言
@@ -49,8 +50,22 @@ let props = defineProps({
     type: Object,
     default: () => {},
   },
+  // 日历事件
+  events: {
+    type: Array as PropType<EventItem[]>,
+    default: () => [],
+  },
+  // 自定义渲染内容方法
+  eventContent: {
+    type: Function,
+  },
+  displayEventEnd: {
+    type: Boolean,
+    default: false,
+  },
 });
 let calendar = ref<Calendar>();
+let emits = defineEmits(["dateClick", "eventClick"]);
 // 渲染日历
 let renderCalendar = () => {
   let el = document.getElementById("calendar");
@@ -62,6 +77,27 @@ let renderCalendar = () => {
       buttonText: props.buttonText,
       headerToolbar: props.headerToolbar,
       footerToolbar: props.footerToolbar,
+      displayEventEnd: props.displayEventEnd,
+      // 定义日期的事件
+      eventSources: [
+        {
+          events(e, callback) {
+            if (props.events.length > 0) {
+              callback(props.events);
+            } else {
+              callback([]);
+            }
+          },
+        },
+      ],
+      dateClick(info: DateClickArg) {
+        emits("dateClick", info);
+      },
+      eventClick(info: EventClickArg) {
+        emits("eventClick", info);
+      },
+      // 自定义渲染内容
+      eventContent: props.eventContent,
     });
     calendar.value.render();
   }
@@ -70,5 +106,13 @@ let renderCalendar = () => {
 onMounted(() => {
   renderCalendar();
 });
+// 监听事件源的变化
+watch(
+  () => props.events,
+  () => {
+    renderCalendar();
+  },
+  { deep: true }
+);
 </script>
 <style lang="scss" scoped></style>
