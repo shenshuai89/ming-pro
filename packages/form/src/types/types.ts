@@ -94,6 +94,8 @@ export interface FormInstance {
   disabled?: boolean;
   validate: (callback?: Callback) => Promise<boolean>;
   resetFields: () => void;
+  resetForm?: () => void;
+  getFormData?: () => Record<string, unknown>;
   clearValidate: (props?: string | string[]) => void;
   validateField: (props: string | string[], cb: ValidateFieldCallback) => void;
 }

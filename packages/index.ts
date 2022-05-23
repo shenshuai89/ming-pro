@@ -10,6 +10,9 @@ import chooseTime from './chooseTime';
 import chooseDate from './chooseDate';
 import transition from './transition';
 import form from './form';
+import table from './table';
+import calendar from './calendar';
+import modalForm from './modalForm';
 import list from './list';
 const components = [
     chooseIcon,
@@ -22,6 +25,9 @@ const components = [
   chooseDate,
   transition,
   form,
+  table,
+  calendar,
+  modalForm,
   list,
 ];
 
