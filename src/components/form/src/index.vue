@@ -60,6 +60,7 @@
           <component
             v-for="(child, i) in item.children"
             :key="i"
+            :disabled="child?.disabled"
             :label="child.label"
             :value="child.value"
             :is="`el-${child.type}`"

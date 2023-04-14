@@ -96,6 +96,7 @@ let options: FormOptions[] = [
         type: "option",
         label: "经理",
         value: "1",
+        disabled: true,
       },
       {
         type: "option",
