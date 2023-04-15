@@ -61,15 +61,15 @@ let options: TableOptions[] = [
     prop: "date",
     label: "日期",
     width: "180",
-    align: "center",
+    align: "left",
     slot: "date",
     editable: true,
   },
   {
     prop: "name",
     label: "姓名",
-    width: "100",
-    align: "center",
+    width: "150",
+    align: "left",
     slot: "name",
   },
   {
@@ -162,7 +162,7 @@ const deleteRow = (value: string) => {
   editRowTag.value = "delete";
 };
 
-const editConfirm = () => {
+const editConfirm = (value: string) => {
   console.log("确认编辑的内容");
 };
 

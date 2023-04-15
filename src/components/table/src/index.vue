@@ -50,9 +50,9 @@
     </template>
     <!-- 通过插槽实现操作项 -->
     <el-table-column
-      :label="actionOptions.label"
-      :align="actionOptions.align"
-      :width="actionOptions.width"
+      :label="actionOptions?.label"
+      :align="actionOptions?.align"
+      :width="actionOptions?.width"
     >
       <template #default="scope">
         <slot name="editRow" v-if="scope.row.rowEdit" :scope="scope"></slot>
@@ -78,9 +78,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, PropType, ref, watch, watchEffect } from "vue";
-import { TableOptions } from "./types";
-import cloneDeep from "lodash/cloneDeep";
+import { computed, onMounted, PropType, ref, watch, watchEffect } from 'vue';
+import { TableOptions } from './types';
+import cloneDeep from 'lodash/cloneDeep';
 const props = defineProps({
   options: {
     type: Array as PropType<TableOptions[]>,
@@ -104,7 +104,7 @@ const props = defineProps({
   // 编辑一行操作标识，是在编辑还是删除还是其他呢
   editRowTag: {
     type: String,
-    default: "",
+    default: '',
   },
   // 是否显示分页
   pagination: {
@@ -113,8 +113,8 @@ const props = defineProps({
   },
   // 显示分页的对齐方式
   paginationAlign: {
-    type: String as PropType<"left" | "center" | "right">,
-    default: "left",
+    type: String as PropType<'left' | 'center' | 'right'>,
+    default: 'left',
   },
   // 当前是第几页
   currentPage: {
@@ -140,8 +140,12 @@ const props = defineProps({
 const filterOptions = computed(() => {
   return props.options.filter((item) => !item.action);
 });
-const actionOptions = computed(() => props.options.find((item) => item.action));
-const isLoading = computed(() => !(props.data && props.data.length > 0));
+const actionOptions = computed((): TableOptions | undefined =>
+  props.options.find((item) => item.action)
+);
+const isLoading = computed(
+  (): boolean => !(props.data && props.data.length > 0)
+);
 
 // 编辑的单元格
 let currentCell = ref<string | undefined>();
@@ -170,7 +174,7 @@ const rowClick = (row: any, column: any) => {
   //判断当前点击的是否是操作栏=
   if (column && column.label === actionOptions.value!.label) {
     // 判断是否可以编辑行
-    if (props.isEditRow && "edit" === props.editRowTag) {
+    if (props.isEditRow && 'edit' === props.editRowTag) {
       // 进行编辑操作
       row.rowEdit = !row.rowEdit;
       tableData.value.map((item) => {
@@ -178,29 +182,36 @@ const rowClick = (row: any, column: any) => {
       });
     }
     // 判断是否可以删除行
-    if (props.isEditRow && "delete" === props.editRowTag) {
+    if (props.isEditRow && 'delete' === props.editRowTag) {
       // 执行删除操作
       tableData.value = tableData.value.filter((item, index) => {
         return row.name !== item.name;
       });
     }
     // 重置editRowTag属性
-    if (!row.rowEdit) emits("update:editRowTag", "");
+    if (!row.rowEdit) emits('update:editRowTag', '');
   }
 };
 
-const emits = defineEmits(["check", "close", "editCell", "update:editRowTag", "size-change", "current-change"]);
+const emits = defineEmits([
+  'check',
+  'close',
+  'editCell',
+  'update:editRowTag',
+  'size-change',
+  'current-change',
+]);
 const editCell = (val: any) => {
   currentCell.value = val.$index + val.column.id;
-  emits("editCell", currentCell);
+  emits('editCell', currentCell);
 };
 const check = (val: any) => {
-  emits("check", val);
-  currentCell.value = "";
+  emits('check', val);
+  currentCell.value = '';
 };
 const close = (val: any) => {
-  emits("close", val);
-  currentCell.value = "";
+  emits('close', val);
+  currentCell.value = '';
 };
 watch(
   () => props.currentClickCell,
@@ -212,24 +223,23 @@ watch(
   }
 );
 
-
 /* 分页设置 */
 // 分页的每一页数据变化
 let handleSizeChange = (val: number) => {
-  emits('size-change', val)
+  emits('size-change', val);
   // console.log(val)
-}
+};
 // 分页页数改变
 let handleCurrentChange = (val: number) => {
-  emits('current-change', val)
+  emits('current-change', val);
   // console.log(val)
-}
+};
 // 表格分页的排列方式
 let justifyContent = computed(() => {
-  if (props.paginationAlign === 'left') return 'flex-start'
-  else if (props.paginationAlign === 'right') return 'flex-end'
-  else return 'center'
-})
+  if (props.paginationAlign === 'left') return 'flex-start';
+  else if (props.paginationAlign === 'right') return 'flex-end';
+  else return 'center';
+});
 </script>
 <style lang="scss" scoped>
 .edit-icon {
@@ -270,7 +280,7 @@ let justifyContent = computed(() => {
   margin-top: 16px;
   display: flex;
 }
-.el-table--fit{
-    min-height: calc(100vh - 154px);
+.el-table--fit {
+  min-height: calc(100vh - 154px);
 }
 </style>
