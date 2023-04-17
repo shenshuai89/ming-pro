@@ -1,6 +1,6 @@
 {
   "name": "ming-pro",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "./lib/ming-pro.umd.js",
   "module": "./lib/ming-pro.es.js",
   "style": "./lib/style.css",
