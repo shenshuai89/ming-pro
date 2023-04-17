@@ -5,6 +5,7 @@ const Random = Mock.Random; // Mock.Random 是一个工具类，用于生成各�
 interface DataList {
   date: string;
   name: string;
+  age: number;
   address: string;
 }
 
@@ -14,6 +15,7 @@ for (let i = 0; i < 200; i++) {
   const template = {
     date: Random.date(), // 生成一个随机日期,可加参数定义日期格式
     name: Random.name(), // 生成姓名
+    age: Random.integer(0,120), // 生成年龄
     address: Random.province(), // 生成地址
   };
   dataList.push(template);

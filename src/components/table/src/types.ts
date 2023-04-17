@@ -1,7 +1,7 @@
 // 定义的是 Table-column 属性
 export interface TableOptions {
   // 字段名称
-  prop?: string;
+  prop: string;
   // 表头
   label: string;
   // 对应列的宽度

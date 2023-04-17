@@ -54,12 +54,13 @@
           v-bind="item.attrs"
           :placeholder="item.placeholder"
           :is="`el-${item.type}`"
-          v-model="model[item.prop]"
+          v-model="model[item.prop!]"
         >
           <!-- 渲染selection复选框的options内容 -->
           <component
             v-for="(child, i) in item.children"
             :key="i"
+            :disabled="child?.disabled"
             :label="child.label"
             :value="child.value"
             :is="`el-${child.type}`"

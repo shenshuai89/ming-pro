@@ -24,8 +24,11 @@
       <el-icon><icon-timer /></el-icon>
       {{ scope.scope.row.date }}
     </template>
-    <template #name="{ scope }">
+    <!-- <template #name="{ scope }">
       {{ scope.row.name }}
+    </template> -->
+    <template #age="{ scope }">
+      {{ scope.row.age }} 岁
     </template>
     <template #action="scope">
       <el-button type="primary" size="small" @click="edit(scope.scope)"
@@ -73,12 +76,20 @@ let options: TableOptions[] = [
     slot: "name",
   },
   {
+    prop: "age",
+    label: "年龄",
+    width: "80",
+    align: "left",
+    slot: "age",
+  },
+  {
     prop: "address",
     label: "地址",
     align: "center",
     editable: true,
   },
   {
+    prop: "action",
     label: "操作",
     action: true,
     align: "center",
@@ -123,7 +134,7 @@ let svg = `
 
 // 分页，设置
 let current = ref<number>(1); //当前页
-let pageSize = ref<number>(6); // 每页数据条数
+let pageSize = ref<number>(20); // 每页数据条数
 let total = ref<number>(0); // 总数
 let getData = () => {
   axios
@@ -133,9 +144,11 @@ let getData = () => {
     })
     .then((res: any) => {
       if (res.data.code === "200") {
-        tableData.value = res.data.data.rows;
-        total.value = res.data.data.total;
-        console.log(res.data.data);
+        setTimeout(() =>{
+          tableData.value = res.data.data.rows;
+          total.value = res.data.data.total;
+          console.log(res.data.data);
+        }, 3000)
       }
     });
 };

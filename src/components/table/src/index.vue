@@ -5,6 +5,7 @@
     v-bind="$attrs"
     @row-click="rowClick"
   >
+    <!-- 排除掉 action 插槽的其他列数据 -->
     <template v-for="item in filterOptions" :key="item.prop">
       <el-table-column
         :label="item.label"
@@ -35,14 +36,16 @@
               </div>
             </template>
             <template v-else>
-              <slot v-if="item.slot" :name="item.slot" :scope="scope"></slot>
-              <span v-else>{{ scope.row[item.prop] }}</span>
-              <el-icon
-                v-if="item.editable"
-                class="edit-icon"
-                @click="editCell(scope)"
-                ><icon-edit
-              /></el-icon>
+              <!-- <span v-if="item.slot"> {{ item.slot }}</span> -->
+              <slot v-if="item.slot" :name="item.slot" :scope="scope">{{ scope.row[item.prop] }}</slot>
+              <span v-else-if="item.editable">
+                {{ scope.row[item.prop] }}
+                <el-icon
+                  class="edit-icon"
+                  @click="editCell(scope)"
+                  ><icon-edit
+                /></el-icon>
+              </span>
             </template>
           </template>
         </template>

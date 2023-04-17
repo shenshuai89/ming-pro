@@ -32,6 +32,8 @@ export interface FormOptions {
     | "editor";
   // 表单项label
   label?: string;
+  // 表单项是否可选
+  disabled?: boolean;
   // 表单项的值
   value?: any;
   rules?: RuleItem[];

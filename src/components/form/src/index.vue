@@ -17,7 +17,7 @@
           v-if="item.type !== 'upload' && item.type !== 'editor'"
           v-bind="item.attrs"
           :is="`el-${item.type}`"
-          v-model="model[item.prop]"
+          v-model="model[item.prop!]"
         ></component>
         <!-- 单独处理上传功能 -->
         <el-upload
@@ -54,7 +54,7 @@
           v-bind="item.attrs"
           :placeholder="item.placeholder"
           :is="`el-${item.type}`"
-          v-model="model[item.prop]"
+          v-model="model[item.prop!]"
         >
           <!-- 渲染selection复选框的options内容 -->
           <component
@@ -71,7 +71,7 @@
     </template>
     <!-- form 底部的提交和重置按钮 -->
     <el-form-item>
-      <!-- 通过作用域插槽将数据传递给上层【使用者】 -->
+      <!-- 通过 具名作用域插槽 将数据传递给上层【使用者】 -->
       <slot name="action" :form="form" :model="model"></slot>
     </el-form-item>
   </el-form>
