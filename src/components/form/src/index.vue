@@ -16,6 +16,7 @@
         <component
           v-if="item.type !== 'upload' && item.type !== 'editor'"
           v-bind="item.attrs"
+          :placeholder="item.placeholder"
           :is="`el-${item.type}`"
           v-model="model[item.prop!]"
         ></component>
@@ -175,7 +176,7 @@ const resetForm = () => {
   // 重置element-plus的表单
   form.value!.resetFields();
   // 清空上次上传的附件内容
-  upload.value[0].clearFiles();
+  upload?.value && upload?.value[0].clearFiles();
 
   // 获取到富文本的配置项, 判断下有富文本编辑存在的清空下
   if (props.options && props.options.length) {
