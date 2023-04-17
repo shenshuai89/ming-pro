@@ -13,6 +13,7 @@ import form from "./form";
 import modalForm from "./modalForm";
 import table from "./table";
 import calendar from "./calendar";
+import search from "./search";
 
 const components = [
   chooseIcon,
@@ -28,7 +29,8 @@ const components = [
   form,
   modalForm,
   table,
-  calendar
+  calendar,
+  search,
 ];
 
 export default {
